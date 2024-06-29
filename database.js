@@ -80,13 +80,13 @@ module.exports = {
   getAuthToken: async (user) => {
     const candidate = await db.all(`SELECT * FROM user WHERE login = ?`, [user.login]);
     if(!candidate.length) {
-      throw 'Wrong login';
+      throw 'Невірний логін!';
     }
     // Такий тип оголошення змінних називається декомпозиція
     const {user_id, login, password, salt} = candidate[0];
     const hash = crypto.pbkdf2Sync(user.password, salt, 1000, 64, `sha512`).toString(`hex`); 
     if(password !== hash) {
-      throw 'Wrong password';
+      throw 'Невірний пароль!';
     }
     return user_id + '.' + login + '.' + crypto.randomBytes(20).toString('hex');
   }

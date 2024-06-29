@@ -66,13 +66,13 @@ function registerUser(req, res) {
       try {
         const user = JSON.parse(data);
         if(!user.login || !user.password) {
-          return res.end('Empty login or password');
+          return res.end('Порожній логін або пароль');
         }
         if(await db.isUserExist(user.login)) {
-          return res.end('User already exist');
+          return res.end('Ім`я вже зайнято');
         }
         await db.addUser(user);
-        return res.end('Registeration is successfull');
+        return res.end('Реєстрація успішна');
       }
       catch(e) {
         res.writeHead(500);
